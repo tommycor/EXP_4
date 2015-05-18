@@ -58,11 +58,10 @@ function initThree(){
 
     attributes = {
         displacement: {
-            type: 'f', // a float
-            value: [] // an empty array
+            type: 'f',
+            value: []
         }
     };
-    cubeGeometry.dynamic = true;
 
     for( i = 0; i < cubeGeometry.vertices.length; i++ )
     {
@@ -113,7 +112,7 @@ function render() {
 
     for( i = 0; i < groundMesh.geometry.vertices.length; i++ )
     {
-        attributes.displacement.value[i] =  Math.random()*60;
+        attributes.displacement.value[i] +=  Math.random()*2 - 1;
     }
 
     attributes.displacement.needsUpdate = true;
