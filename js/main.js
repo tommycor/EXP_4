@@ -11,6 +11,7 @@ var MAX_HEIGHT = 10;
 var groundMesh;
 var sizeSelector = 15;
 var looking = new THREE.Vector3( (depth*margin)/2, 0, (depth*margin)/2 );
+var attributes;
 
 var maxDuration = 4; //secondes
 var vitesse = (depth*margin)/maxDuration;
@@ -26,7 +27,6 @@ var state = false;
 
 
 function initThree(){
-    console.log(Date.now())
 
     //// INIT
     scene = new THREE.Scene();
@@ -54,13 +54,31 @@ function initThree(){
 
     scene.add(new THREE.AmbientLight(0xffffff));
 
-
     var cubeGeometry = new THREE.BoxGeometry(1000, 1000, 1000, 20, 20, 20);
+
+    attributes = {
+        displacement: {
+            type: 'f', // a float
+            value: [] // an empty array
+        }
+    };
+    cubeGeometry.dynamic = true;
+
+    for( i = 0; i < cubeGeometry.vertices.length; i++ )
+    {
+        attributes.displacement.value.push( (Math.random()*60));
+    }
+    console.log(attributes.displacement.value)
+
     // var cubeGeometry = new THREE.SphereGeometry(500, 100, 100);
-    var cubeMaterial = new THREE.MeshLambertMaterial({color: 'white', wireframe : true});
+    // var cubeMaterial = new THREE.MeshLambertMaterial({color: 'white', wireframe : true});
+    var cubeMaterial = new THREE.ShaderMaterial( {
+        attributes:     attributes,
+        vertexShader: document.getElementById( 'vertexShader' ).textContent,
+        fragmentShader: document.getElementById( 'fragmentShader' ).textContent
+    });
     groundMesh = new THREE.Mesh(cubeGeometry, cubeMaterial);
     scene.add(groundMesh);
-    console.log(groundMesh.position);
 
     document.body.appendChild(renderer.domElement);
 
@@ -93,14 +111,21 @@ function render() {
     camera.position.z = control.camZ;
     camera.lookAt( scene.position );
 
-        for(var i=0; i < waves.length; i++)
-        {
-            waves[i].update();
-            if(waves[i].currentTime > duration){
-                waves[i] = null;
-                waves.splice(i, 1);
-            }
+    for( i = 0; i < groundMesh.geometry.vertices.length; i++ )
+    {
+        attributes.displacement.value[i] =  Math.random()*60;
+    }
+
+    attributes.displacement.needsUpdate = true;
+
+    for(var i=0; i < waves.length; i++)
+    {
+        waves[i].update();
+        if(waves[i].currentTime > duration){
+            waves[i] = null;
+            waves.splice(i, 1);
         }
+    }
 
     stats.update();
     renderer.render(scene, camera);

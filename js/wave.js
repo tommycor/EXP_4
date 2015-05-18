@@ -19,8 +19,6 @@ function Wave(center, mesh, vitesse, maxAmplitude, longOnde, diameter, duration,
 	}
 
 	var normalized = mesh.geometry.vertices[0].setLength(12);
-	console.log(normalized)
-	console.log(mesh.geometry.vertices[0])
 
 	this.delays = [];
 
