@@ -15,7 +15,7 @@ var attributes;
 
 var maxDuration = 4; //secondes
 var vitesse = (depth*margin)/maxDuration;
-var maxAmplitude = 10;
+var maxAmplitude = 50;
 var longOnde = 15;
 var duration = 2000;
 var diameter = 3;
@@ -76,6 +76,7 @@ function initThree(){
         vertexShader: document.getElementById( 'vertexShader' ).textContent,
         fragmentShader: document.getElementById( 'fragmentShader' ).textContent
     });
+
     groundMesh = new THREE.Mesh(cubeGeometry, cubeMaterial);
     scene.add(groundMesh);
 

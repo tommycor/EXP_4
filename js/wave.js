@@ -36,7 +36,7 @@ function Wave(center, mesh, vitesse, maxAmplitude, longOnde, diameter, duration,
 			if(amplitude > 0){
 				var mover = Math.sin((delay*this.longOnde)-((this.currentTime)/this.frequence))*amplitude*this.facteurTime;
 				// mesh.geometry.vertices[i].y = (mesh.geometry.vertices[i].y - this.last[i]) + mover;
-				attributes.displacement.value[i] = (mesh.geometry.vertices[i].y - this.last[i]) + mover;
+				attributes.displacement.value[i] = mover - this.last[i];
 				this.last[i] = mover;
 			}
 			else{
