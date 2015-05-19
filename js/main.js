@@ -65,7 +65,7 @@ function initThree(){
 
     for( i = 0; i < cubeGeometry.vertices.length; i++ )
     {
-        attributes.displacement.value.push( (Math.random()*60));
+        attributes.displacement.value.push(0);
     }
     console.log(attributes.displacement.value)
 
@@ -110,12 +110,12 @@ function render() {
     camera.position.z = control.camZ;
     camera.lookAt( scene.position );
 
-    for( i = 0; i < groundMesh.geometry.vertices.length; i++ )
-    {
-        attributes.displacement.value[i] +=  Math.random()*2 - 1;
-    }
+    // for( i = 0; i < groundMesh.geometry.vertices.length; i++ )
+    // {
+    //     attributes.displacement.value[i] +=  Math.random()*2 - 1;
+    // }
 
-    attributes.displacement.needsUpdate = true;
+    // attributes.displacement.needsUpdate = true;
 
     for(var i=0; i < waves.length; i++)
     {
@@ -136,7 +136,7 @@ function createWave(event){
     if(mouseState){
         var center = getPosition(event, groundMesh)
         if (typeof center != "undefined")
-            waves.push(new Wave(center, groundMesh, vitesse, maxAmplitude, longOnde, diameter, duration, frequence));
+            waves.push(new Wave(center, groundMesh, vitesse, maxAmplitude, longOnde, diameter, duration, frequence, attributes));
     }
 }
 
