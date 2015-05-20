@@ -36,32 +36,30 @@ function Wave(center, mesh, vitesse, maxAmplitude, longOnde, diameter, duration,
 			if(amplitude > 0){
 				var mover = Math.sin((delay*this.longOnde)-((this.currentTime)/this.frequence))*amplitude*this.facteurTime;
 				// mesh.geometry.vertices[i].y = (mesh.geometry.vertices[i].y - this.last[i]) + mover;
-				attributes.displacement.value[i] = mover - this.last[i];
+				attributes.displacement.value[i] += mover - this.last[i];
+				// attributes.displacement.value[i] = mover - this.last[i];
 				this.last[i] = mover;
 			}
 			else{
 				this.last[i] = 0;
 			}
 		}
-		// mesh.geometry.verticesNeedUpdate = true;
-		attributes.displacement.needsUpdate = true;
+		// attributes.displacement.needsUpdate = true;
 	}
-
-	// mesh.geometry.verticesNeedUpdate = true;
-	attributes.displacement.needsUpdate = true;
+	// attributes.displacement.needsUpdate = true;
 }
 
 
 function getDistance(center, target){
 
-    var dist = {
-    	x: target.x - center.x ,
-    	y: target.y - center.y ,
-    	z: target.z - center.z
-    }
+	var dist = {
+		x: target.x - center.x ,
+		y: target.y - center.y ,
+		z: target.z - center.z
+	}
 
-    dist = Math.sqrt(dist.x*dist.x + dist.z*dist.z + dist.y*dist.y);
-    return dist
+	dist = Math.sqrt(dist.x*dist.x + dist.z*dist.z + dist.y*dist.y);
+	return dist
 }
 
 function getAmplitude(maxAmplitude, distance, diametere){

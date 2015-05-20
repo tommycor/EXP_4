@@ -15,7 +15,7 @@ var attributes;
 
 var maxDuration = 4; //secondes
 var vitesse = (depth*margin)/maxDuration;
-var maxAmplitude = 50;
+var maxAmplitude = 10;
 var longOnde = 15;
 var duration = 2000;
 var diameter = 3;
@@ -54,7 +54,8 @@ function initThree(){
 
     scene.add(new THREE.AmbientLight(0xffffff));
 
-    var cubeGeometry = new THREE.BoxGeometry(1000, 1000, 1000, 20, 20, 20);
+    // var cubeGeometry = new THREE.BoxGeometry(1000, 1000, 1000, 20, 20, 20);
+    var cubeGeometry = new THREE.SphereGeometry(700, 50, 50);
 
     attributes = {
         displacement: {
@@ -68,11 +69,9 @@ function initThree(){
         attributes.displacement.value.push(0);
     }
     console.log(attributes.displacement.value)
-
-    // var cubeGeometry = new THREE.SphereGeometry(500, 100, 100);
-    // var cubeMaterial = new THREE.MeshLambertMaterial({color: 'white', wireframe : true});
     var cubeMaterial = new THREE.ShaderMaterial( {
         attributes:     attributes,
+        wireframe: true,
         vertexShader: document.getElementById( 'vertexShader' ).textContent,
         fragmentShader: document.getElementById( 'fragmentShader' ).textContent
     });
@@ -116,7 +115,7 @@ function render() {
     //     attributes.displacement.value[i] +=  Math.random()*2 - 1;
     // }
 
-    // attributes.displacement.needsUpdate = true;
+    attributes.displacement.needsUpdate = true;
 
     for(var i=0; i < waves.length; i++)
     {
